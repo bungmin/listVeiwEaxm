@@ -1,23 +1,34 @@
 package com.hh.listveiweaxm;
 
+import android.databinding.DataBindingComponent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 
+import com.hh.listveiweaxm.databinding.ActivityMainBinding;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import adaptors.StoreAdapter;
 import data.Store;
 
 public class MainActivity extends AppCompatActivity {
 
+    ActivityMainBinding act;
+
     List<Store> myStroeList = new ArrayList<>();
     private android.widget.ListView storeListView;
+
+
+    StoreAdapter myAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        //setContentView(R.layout.activity_main);
+        act = DataBindingUtil.setContentView(this, R.layout.activity_main);
 
         bindViews();
         setupEvents();
@@ -47,6 +58,15 @@ public class MainActivity extends AppCompatActivity {
     void setValues(){
 
         fillStore();
+
+        myAdapter = new StoreAdapter(MainActivity.this, myStroeList);
+        //storeListView.setAdapter(myAdapter);
+        act.storeListView.setAdapter(myAdapter);
+        act.appNameTxt.setText("배달의민족");
+
+
+
+
 
     }
 
